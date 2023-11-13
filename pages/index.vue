@@ -91,9 +91,17 @@ export default {
         const user = { // Формируем введенные данные пользователя и передаем в state
           name: this.name,
           room: this.room
-        }
-        this.setUser(user); //Передаем в мутацию Имя и номер комнаты, которые были введены
-        this.$router.push("/chat") //Переход на страницу чата
+        };
+
+        this.$socket.emit('userJoined', user, data => {
+          if(typeof data === 'string') {
+            console.log(data)
+          } else {
+            user.id = data.userId; //У пользователя будет специфический индетификатор
+            this.setUser(user); //Передаем в мутацию Имя и номер комнаты, которые были введены
+            this.$router.push("/chat") //Переход на страницу чата
+          }
+        }) // Эмитим события на сервер
       }
     },
   },

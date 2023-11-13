@@ -1,5 +1,9 @@
 <template>
-  <h2>Chat {{user.name}}</h2>
+  <div>
+    <ul>
+      <li v-for="m in messages" :key="m.text">{{m.text}}</li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -12,7 +16,7 @@ export default {
       title: `Комната ${this.user.room}`
     }
   },
-  computed: mapState(['user'])
+  computed: mapState(['user', 'messages']) //Берем свойства из store
 
 }
 </script>
